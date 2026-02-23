@@ -1,0 +1,4 @@
+# Dépendances du projet Gestionnaire de Contacts
+
+# Aucune dépendance externe requise
+# Le projet utilise uniquement la stdlib Python
