@@ -1,18 +1,8 @@
-"""Modèle Contact"""
-
-
 class Contact:
     """Classe représentant un contact"""
 
     def __init__(self, nom: str, prenom: str, numero_portable: str):
-        """
-        Initialise un contact
 
-        Args:
-            nom: Le nom du contact
-            prenom: Le prénom du contact
-            numero_portable: Le numéro de téléphone portable
-        """
         self.nom = nom
         self.prenom = prenom
         self.numero_portable = numero_portable

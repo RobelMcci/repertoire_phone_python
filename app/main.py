@@ -1,7 +1,3 @@
-"""
-Point d'entrée de l'application - Gestionnaire de contacts
-"""
-
 from app.services.contact_service import ContactService
 import os
 
@@ -10,11 +6,9 @@ class GestionnaireContacts:
     """Classe pour gérer l'interface utilisateur console"""
 
     def __init__(self):
-        """Initialise le gestionnaire"""
         self.service = ContactService()
 
     def nettoyer_ecran(self):
-        """Nettoie l'écran de la console"""
         os.system("clear" if os.name == "posix" else "cls")
 
     def afficher_menu_principal(self):
@@ -30,7 +24,6 @@ class GestionnaireContacts:
         print("=" * 50)
 
     def ajouter_contact(self):
-        """Ajoute un nouveau contact"""
         print("\n--- Ajouter un contact ---")
         try:
             nom = input("Nom: ").strip()
@@ -59,7 +52,6 @@ class GestionnaireContacts:
             print(f"Erreur lors de l'ajout du contact: {e}")
 
     def rechercher_contact(self):
-        """Recherche un contact"""
         print("\n--- Rechercher un contact ---")
         print("1. Rechercher par nom")
         print("2. Rechercher par numéro")
@@ -73,7 +65,6 @@ class GestionnaireContacts:
             print("Choix invalide!")
 
     def rechercher_par_nom(self):
-        """Recherche un contact par nom"""
         nom = input("Nom à chercher: ").strip()
         if not nom:
             print("Le nom ne peut pas être vide!")
@@ -88,7 +79,6 @@ class GestionnaireContacts:
             print(f"Aucun contact trouvé avec le nom '{nom}'")
 
     def rechercher_par_numero(self):
-        """Recherche un contact par numéro"""
         numero = input("Numéro à chercher: ").strip()
         if not numero:
             print("Le numéro ne peut pas être vide!")
@@ -102,7 +92,6 @@ class GestionnaireContacts:
             print(f"Aucun contact trouvé avec le numéro '{numero}'")
 
     def afficher_tous_contacts(self):
-        """Affiche tous les contacts"""
         contacts = self.service.get_tous_contacts()
         
         print("\n--- Liste des contacts ---")
@@ -116,7 +105,6 @@ class GestionnaireContacts:
         print()
 
     def supprimer_contact(self):
-        """Supprime un contact"""
         print("\n--- Supprimer un contact ---")
         numero = input("Numéro du contact à supprimer: ").strip()
         
@@ -141,7 +129,6 @@ class GestionnaireContacts:
             print(f"Aucun contact trouvé avec le numéro '{numero}'")
 
     def lancer(self):
-        """Lance l'application"""
         while True:
             self.afficher_menu_principal()
             choix = input("\nVotre choix: ").strip()
