@@ -20,7 +20,8 @@ class GestionnaireContacts:
         print("2. Rechercher un contact")
         print("3. Afficher tous les contacts")
         print("4. Supprimer un contact")
-        print("5. Quitter")
+        print("5. Modifier un contact")
+        print("6. Quitter")
         print("=" * 50)
 
     def ajouter_contact(self):
@@ -41,7 +42,12 @@ class GestionnaireContacts:
                 print("Le numéro ne peut pas être vide!")
                 return
 
-            # Vérifier si le numéro existe déjà
+            # Verifier si un contact identique existe deja
+            if self.service.existe_contact(nom, prenom, numero):
+                print("Ce contact existe deja dans le repertoire!")
+                return
+
+            # Verifier si le numero existe deja
             if self.service.rechercher_par_numero(numero):
                 print(f"Un contact avec le numéro {numero} existe déjà!")
                 return
@@ -128,6 +134,48 @@ class GestionnaireContacts:
         else:
             print(f"Aucun contact trouvé avec le numéro '{numero}'")
 
+    def modifier_contact(self):
+        print("\n--- Modifier un contact ---")
+        numero = input("Numéro du contact à modifier: ").strip()
+
+        if not numero:
+            print("Le numéro ne peut pas être vide!")
+            return
+
+        contact = self.service.rechercher_par_numero(numero)
+        if not contact:
+            print(f"Aucun contact trouvé avec le numéro '{numero}'")
+            return
+
+        print(f"Contact actuel: {contact}")
+
+        nouveau_nom = input("Nouveau nom (laisser vide pour conserver): ").strip()
+        nouveau_prenom = input("Nouveau prénom (laisser vide pour conserver): ").strip()
+        nouveau_numero = input("Nouveau numéro (laisser vide pour conserver): ").strip()
+
+        if not nouveau_nom:
+            nouveau_nom = contact.nom
+        if not nouveau_prenom:
+            nouveau_prenom = contact.prenom
+        if not nouveau_numero:
+            nouveau_numero = contact.numero_portable
+
+        if self.service.existe_contact(nouveau_nom, nouveau_prenom, nouveau_numero):
+            if (
+                nouveau_nom != contact.nom
+                or nouveau_prenom != contact.prenom
+                or nouveau_numero != contact.numero_portable
+            ):
+                print("Un contact identique existe deja dans le repertoire!")
+                return
+
+        if self.service.modifier_contact(
+            numero, nouveau_nom, nouveau_prenom, nouveau_numero
+        ):
+            print("Contact modifie avec succes!")
+        else:
+            print("Modification impossible (numero deja utilise ou contact absent)")
+
     def lancer(self):
         while True:
             self.afficher_menu_principal()
@@ -142,10 +190,12 @@ class GestionnaireContacts:
             elif choix == "4":
                 self.supprimer_contact()
             elif choix == "5":
+                self.modifier_contact()
+            elif choix == "6":
                 print("\n Au revoir!")
                 break
             else:
-                print("Choix invalide! Veuillez entrer un numéro entre 1 et 5")
+                print("Choix invalide! Veuillez entrer un numéro entre 1 et 6")
 
             input("\nAppuyez sur Entrée pour continuer...")
 
